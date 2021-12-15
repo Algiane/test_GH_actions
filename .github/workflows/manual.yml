@@ -27,7 +27,6 @@ jobs:
             os: [linux, macos]
             pattern: [on,off]
             scotch: [on,off]
-            vtk: [off]
             include:
               # run vtk only without scotch and with delaunay insertion
               - pattern : off
