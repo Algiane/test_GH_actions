@@ -28,12 +28,11 @@ jobs:
             pattern: [on,off]
             scotch: [on,off]
             vtk: [on,off]
-        exclude:
-            # excludes vtk pattern or sctoch builds (run vtk only without scotch and in delaunay)
-            - pattern : on
-              vtk: on
-            - scotch : off
-              vtk: on
+            include:
+              # run vtk only without scotch and with delaunay insertion
+              - pattern : off
+                scotch : off
+                vtk: on
         
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
