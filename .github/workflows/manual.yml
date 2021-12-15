@@ -27,6 +27,7 @@ jobs:
             os: [linux, macos]
             pattern: [on,off]
             scotch: [on,off]
+            vtk: [off]
             include:
               # run vtk only without scotch and with delaunay insertion
               - pattern : off
@@ -35,6 +36,7 @@ jobs:
             exclude:
               - os: macos
                 scotch: on
+              - os: macos
                 vtk: on
            
     # Steps represent a sequence of tasks that will be executed as part of the job
