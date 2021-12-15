@@ -33,11 +33,11 @@ jobs:
               - pattern : off
                 scotch : off
                 vtk: on
-            exclude:
-              - os: macos
-                scotch: on
-              - os: macos
-                vtk: on
+            #exclude:
+            #  - os: macos
+            #    scotch: on
+            #  - os: macos
+            #    vtk: on
            
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
