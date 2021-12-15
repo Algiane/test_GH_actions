@@ -15,17 +15,16 @@ on:
         default: 'World'
         # Input has to be provided for the workflow to run
         required: true
-      runner:
-         description: 'runner id (self-hosted, macos or linux)'
-         default: 'self-hosted'
-         required: false
-       
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
   greet:
     # The type of runner that the job will run on
-    runs-on: ${{ github.event.inputs.runner }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+        matrix:
+            os: [linux, macos]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
