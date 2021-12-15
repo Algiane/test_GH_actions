@@ -30,7 +30,8 @@ jobs:
             vtk: [off]
             include:
               # run vtk only without scotch and with delaunay insertion
-              - pattern : off
+              - os : linux
+                pattern : off
                 scotch : off
                 vtk: on
             #exclude:
