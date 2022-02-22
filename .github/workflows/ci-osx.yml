@@ -1,0 +1,20 @@
+name: GitHub macOS CI
+
+on: [push, pull_request]
+
+jobs:
+  macOS:
+    runs-on: macOS-10.15
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install system dependencies
+        run: |
+          brew install vtk cmake
+      - name: Build Mmg
+        run: |
+          git clone https://github.com/MmgTools/mmg.git
+          cd mmg && mkdir build && cd build
+          cmake ..
+          make -j 2 mmg2d
