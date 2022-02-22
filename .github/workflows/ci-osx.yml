@@ -11,13 +11,13 @@ jobs:
 
       - name: Install system dependencies
         run: |
-          git clone https://github.com/ISCDtoolbox/Commons.git && cd Commons
-          mkdir build && cd build && cmake .. && make install && cd ..
-          git clone https://github.com/ISCDtoolbox/LinearElasticity.git && cd LinearElasticity
-          mkdir build && cd build && cmake .. && make install && cd ..
+          #git clone https://github.com/ISCDtoolbox/Commons.git && cd Commons
+          #mkdir build && cd build && cmake .. && make install && cd ..
+          #git clone https://github.com/ISCDtoolbox/LinearElasticity.git && cd LinearElasticity
+          #mkdir build && cd build && cmake .. && make install && cd ..
           git clone https://gitlab.inria.fr/scotch/scotch.git && cd scotch
           git checkout v6.1.3
-          cd src && ln -s Make.inc/Makefile.inc.i686_mac_darwin10 Make.inc && make install scotch && cd ..
+          cd src && ln -s Make.inc Make.inc/Makefile.inc.i686_mac_darwin10  && make install scotch && cd ..
           # brew install vtk
 
       - name: Build Mmg
