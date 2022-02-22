@@ -12,11 +12,11 @@ jobs:
       - name: Install system dependencies
         run: |
           git clone https://github.com/ISCDtoolbox/Commons.git && cd Commons
-          mkdir build && cd build && cmake .. && make install
+          mkdir build && cd build && cmake .. && make install && cd ..
           git clone https://github.com/ISCDtoolbox/LinearElasticity.git && cd LinearElasticity
-          mkdir build && cd build && cmake .. && make install
+          mkdir build && cd build && cmake .. && make install && cd ..
           git clone https://gitlab.inria.fr/scotch/scotch.git && cd scotch
-          git checkout v6.1.3 && mkdir build && cd build && cmake .. && make scotch
+          git checkout v6.1.3 && mkdir build && cd build && cmake .. && make install scotch && cd ..
           # brew install vtk
 
       - name: Build Mmg
