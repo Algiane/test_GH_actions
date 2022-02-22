@@ -11,7 +11,12 @@ jobs:
 
       - name: Install system dependencies
         run: |
-          brew install vtk cmake
+          brew install vtk
+          git clone https://github.com/ISCDtoolbox/Commons.git && cd Commons
+          mkdir build && cd build && cmake .. && make install
+          git clone https://github.com/ISCDtoolbox/LinearElasticity.git && cd LinearElasticity
+          mkdir build && cd build && cmake .. && make install
+    
       - name: Build Mmg
         run: |
           git clone https://github.com/MmgTools/mmg.git
