@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   ubuntu:
-    runs-on: ubuntu-21.10
+    runs-on: ubuntu-20.04
 
     strategy:
         matrix:
@@ -30,7 +30,7 @@ jobs:
       - name: Install VTK
         run: |
           sudo apt-get update
-          sudo apt-get install -y libvtk9-dev
+          sudo apt-get install -y libvtk7-dev
           
       - name: Install Sctoch
         run: |
