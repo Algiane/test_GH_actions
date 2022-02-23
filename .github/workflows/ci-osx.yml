@@ -6,6 +6,17 @@ jobs:
   macOS:
     runs-on: macOS-10.15
 
+    strategy:
+        matrix:
+            pattern: [on,off]
+            scotch: [on,off]
+            vtk: [off]
+            include:
+              # run vtk only without scotch and with delaunay insertion
+              - pattern : off
+                scotch : off
+                vtk: on
+
     steps:
       - uses: actions/checkout@v2
 
@@ -40,12 +51,19 @@ jobs:
           cd build && cmake ..
           make install
 
-      - name: Build Mmg
+      - name: Configure Mmg      
         run: |
+          echo "${{ github.event.inputs.name }}: Pattern ${{ matrix.pattern }}, Scotch  ${{ matrix.scotch }}, VTK  ${{ matrix.vtk }}"
           git clone https://github.com/MmgTools/mmg.git && cd mmg
           mkdir build && cd build
-          cmake -DBUILD_TESTING=ON ..
-          make -j "$NJOBS" mmg2d
-          ctest -R mmg2d_vtkvtk_ani -VV
+          cmake -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Release -DPATTERN=${{matrix.pattern}} -DUSE_SCOTCH=${{matrix.scotch}} -DUSE_VTK={{matrix.vtk}} -DCMAKE_Fortran_COMPILER=gfortran -DTEST_LIBMMG=ON -DTEST_LIBMMGS=ON -DTEST_LIBMMG2D=ON -DTEST_LIBMMG3D=ON ..
+
+      - name: Build Mmg      
+        run: |
+          make -j "$NJOBS"
         env:
           NJOBS: "2"
+          
+      - name: Test Mmg      
+        run: |
+          ctest
