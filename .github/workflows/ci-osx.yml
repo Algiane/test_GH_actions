@@ -42,6 +42,6 @@ jobs:
           git clone https://github.com/MmgTools/mmg.git && cd mmg
           mkdir build && cd build
           cmake ..
-          # make -j "$NJOBS" mmg2d
+        # make -j "$NJOBS" mmg2d
         env: |
           NJOBS: "2"
