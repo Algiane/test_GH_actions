@@ -47,5 +47,5 @@ jobs:
           cmake -DBUILD_TESTING=ON ..
           make -j "$NJOBS" mmg2d
           ctest -R mmg2d_vtkvtk_ani -VV
-        # env: |
-         # NJOBS: "2"
+        env: |
+          NJOBS: "2"
