@@ -1,0 +1,75 @@
+name: GitHub ubuntu CI
+
+on: [push, pull_request]
+
+jobs:
+  macOS:
+    runs-on: ubuntu-20.04
+
+    strategy:
+        matrix:
+            build: [Release,Debug]
+            pattern: [on,off]
+            scotch: [on,off]
+            vtk: [off]
+            include:
+              # run vtk only without scotch and with delaunay insertion
+              - build: Release
+                pattern: off
+                scotch: off
+                vtk: on
+                
+              - build: Debug
+                pattern: off
+                scotch: off
+                vtk: on
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install VTK
+        run: |
+          apt-get install -y libvtk9-dev
+          
+      - name: Install Sctoch
+        run: |
+          git clone https://gitlab.inria.fr/scotch/scotch.git && cd scotch
+          git checkout v6.1.3
+          cd src && cp Make.inc/Makefile.inc.x86-64_pc_linux2 Makefile.inc
+          make scotch -j "$NJOBS"
+          make install scotch -j "$NJOBS"
+        env:
+          NJOBS: "2"
+
+      - name: Install LibCommons
+        run: |
+          git clone https://github.com/ISCDtoolbox/Commons.git && cd Commons
+          mkdir build
+          cd build && cmake ..
+          make install
+          
+      - name: Install LinearElasticity
+        run: |
+          git clone https://github.com/ISCDtoolbox/LinearElasticity.git && cd LinearElasticity
+          mkdir build
+          cd build && cmake ..
+          make install
+      - name: Configure Mmg      
+        run: |
+          echo "${{ github.event.inputs.name }}: Build ${{ matrix.build }}, Pattern ${{ matrix.pattern }}, Scotch  ${{ matrix.scotch }}, VTK  ${{ matrix.vtk }}"
+          git clone https://github.com/MmgTools/mmg.git && cd mmg
+          mkdir build && cd build
+          cmake -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=${{matrix.build}} -DPATTERN=${{matrix.pattern}} -DUSE_SCOTCH=${{matrix.scotch}} -DUSE_VTK={{matrix.vtk}} -DCMAKE_Fortran_COMPILER=gfortran-11 -DTEST_LIBMMG=ON -DTEST_LIBMMGS=ON -DTEST_LIBMMG2D=ON -DTEST_LIBMMG3D=ON ..
+      - name: Build Mmg      
+        run: |
+          cd mmg/build
+          make -j "$NJOBS"
+        env:
+          NJOBS: "2"
+          
+      - name: Test Mmg      
+        run: |
+          cd mmg/build
+          ctest -VV
+
+
