@@ -60,10 +60,12 @@ jobs:
 
       - name: Build Mmg      
         run: |
+          cd mmg/build
           make -j "$NJOBS"
         env:
           NJOBS: "2"
           
       - name: Test Mmg      
         run: |
+          cd mmg/build
           ctest
