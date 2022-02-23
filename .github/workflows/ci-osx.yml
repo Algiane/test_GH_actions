@@ -11,8 +11,11 @@ jobs:
 
       - name: Install VTK
         run: |
-          brew install vtk
-
+          brew install vtk@8.2
+          brew link vtk@8.2
+          cp /usr/local/opt/hdf5/lib/libhdf5.dylib /usr/local/opt/hdf5/lib/libhdf5.200.dylib
+          cp /usr/local/opt/hdf5/lib/libhdf5_hl.dylib /usr/local/opt/hdf5/lib/libhdf5_hl.200.dylib
+          cp /usr/local/opt/hdf5/lib/libhdf5_hl_cpp.dylib /usr/local/opt/hdf5/lib/libhdf5_hl_cpp.200.dylib
       #- name: Install Sctoch
       #  run: |
       #    git clone https://gitlab.inria.fr/scotch/scotch.git && cd scotch
@@ -41,7 +44,8 @@ jobs:
         run: |
           git clone https://github.com/MmgTools/mmg.git && cd mmg
           mkdir build && cd build
-          cmake ..
-        # make -j "$NJOBS" mmg2d
+          cmake -DBUILD_TESTING=ON ..
+          make -j "$NJOBS" mmg2d
+          ctest -R mmg2d_vtkvtk_ani -VV
         # env: |
          # NJOBS: "2"
