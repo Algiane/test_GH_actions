@@ -3,7 +3,7 @@ name: GitHub ubuntu CI
 on: [push, pull_request]
 
 jobs:
-  macOS:
+  ubuntu:
     runs-on: ubuntu-20.04
 
     strategy:
