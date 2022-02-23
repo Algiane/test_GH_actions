@@ -8,13 +8,20 @@ jobs:
 
     strategy:
         matrix:
+            build: [Release,Debug]
             pattern: [on,off]
             scotch: [on,off]
             vtk: [off]
             include:
               # run vtk only without scotch and with delaunay insertion
-              - pattern : off
-                scotch : off
+              - build: Release
+                pattern: off
+                scotch: off
+                vtk: on
+                
+              - build: Debug
+                pattern: off
+                scotch: off
                 vtk: on
 
     steps:
@@ -53,10 +60,10 @@ jobs:
 
       - name: Configure Mmg      
         run: |
-          echo "${{ github.event.inputs.name }}: Pattern ${{ matrix.pattern }}, Scotch  ${{ matrix.scotch }}, VTK  ${{ matrix.vtk }}"
+          echo "${{ github.event.inputs.name }}: Build ${{ matrix.build }}, Pattern ${{ matrix.pattern }}, Scotch  ${{ matrix.scotch }}, VTK  ${{ matrix.vtk }}"
           git clone https://github.com/MmgTools/mmg.git && cd mmg
           mkdir build && cd build
-          cmake -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Release -DPATTERN=${{matrix.pattern}} -DUSE_SCOTCH=${{matrix.scotch}} -DUSE_VTK={{matrix.vtk}} -DCMAKE_Fortran_COMPILER=gfortran-11 -DTEST_LIBMMG=ON -DTEST_LIBMMGS=ON -DTEST_LIBMMG2D=ON -DTEST_LIBMMG3D=ON ..
+          cmake -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=${{matrix.build}} -DPATTERN=${{matrix.pattern}} -DUSE_SCOTCH=${{matrix.scotch}} -DUSE_VTK={{matrix.vtk}} -DCMAKE_Fortran_COMPILER=gfortran-11 -DTEST_LIBMMG=ON -DTEST_LIBMMGS=ON -DTEST_LIBMMG2D=ON -DTEST_LIBMMG3D=ON ..
 
       - name: Build Mmg      
         run: |
@@ -68,4 +75,4 @@ jobs:
       - name: Test Mmg      
         run: |
           cd mmg/build
-          ctest
+          ctest -VV
