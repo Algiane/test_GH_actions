@@ -43,5 +43,5 @@ jobs:
           mkdir build && cd build
           cmake ..
         # make -j "$NJOBS" mmg2d
-        env: |
-          NJOBS: "2"
+        # env: |
+         # NJOBS: "2"
