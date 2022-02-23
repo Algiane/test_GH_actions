@@ -17,8 +17,8 @@ jobs:
           #mkdir build && cd build && cmake .. && make install && cd ..
           git clone https://gitlab.inria.fr/scotch/scotch.git && cd scotch
           git checkout v6.1.3
-          cd src && cp Make.inc/Makefile.inc.i686_mac_darwin10 Makefile.inc && make -j 4 && make install -j 4
-          pwd && pwd ../.. && ls ../../lib 
+          cd src && cp Make.inc/Makefile.inc.i686_mac_darwin10 Makefile.inc && make scotch -j 4 && make install scotch  -j 4
+          pwd
           # brew install vtk
 
       - name: Build Mmg
