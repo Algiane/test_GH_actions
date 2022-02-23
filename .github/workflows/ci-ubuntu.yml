@@ -29,6 +29,7 @@ jobs:
 
       - name: Install VTK
         run: |
+          sudo apt-get update
           sudo apt-get install -y libvtk9-dev
           
       - name: Install Sctoch
