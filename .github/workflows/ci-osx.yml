@@ -23,7 +23,7 @@ jobs:
       #    cd src && cp Make.inc/Makefile.inc.i686_mac_darwin10 Makefile.inc
       #    make scotch -j "$NJOBS"
       #    make install scotch -j "$NJOBS"
-      #  env: |
+      #  env:
       #    NJOBS: "2"
 
       #- name: Install LibCommons
@@ -47,5 +47,5 @@ jobs:
           cmake -DBUILD_TESTING=ON ..
           make -j "$NJOBS" mmg2d
           ctest -R mmg2d_vtkvtk_ani -VV
-        env: |
+        env:
           NJOBS: "2"
