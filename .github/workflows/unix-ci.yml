@@ -29,9 +29,12 @@ jobs:
             pattern: [off]
             include:
               # add a specific test
-              - os: macos-10.15,ubuntu-20.04
+              - os: macos-10.15
                 build: Release
-                pattern: on                
+                pattern: on
+              - os: ubuntu-20.04
+                build: Release
+                pattern: on
 
     steps:
       # checkout the provided branch name if workflow is manually run
@@ -53,3 +56,14 @@ jobs:
           else
             echo "$RUNNER_OS"
           fi
+
+      - name: customEnv
+        run: |
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            export GFORT=gfortran-11
+            echo $GFORT
+          else
+            export GFORT=gfortran-9
+            echo $GFORT
+          fi
+
