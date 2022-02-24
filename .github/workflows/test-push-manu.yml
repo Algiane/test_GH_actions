@@ -20,7 +20,7 @@ on:
 jobs:
   linux:
     runs-on: ubuntu-20.04
-  
+
     steps:
       - uses: actions/checkout@v2
         if: github.event_name == 'workflow_dispatch'
@@ -29,4 +29,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Send greeting
-        run: echo "Hello ${{ github.event.inputs.branch }}"
+        run:
+          echo "Hello ${{ github.event.inputs.branch }}"
+          git branch
+        
