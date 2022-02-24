@@ -24,7 +24,7 @@ jobs:
     # Launch a matrix of jobs
     strategy:
         matrix:
-            os: [ubuntu-20.04,macOS-10.15]
+            os: [ubuntu-20.04,macos-10.15]
             build: [Release,Debug]
             pattern: [off]
             include:
