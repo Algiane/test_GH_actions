@@ -29,7 +29,6 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Send greeting
-        run:
+        run: |
           echo "Hello ${{ github.event.inputs.branch }}"
           git branch
-        
