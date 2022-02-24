@@ -44,6 +44,7 @@ jobs:
           sudo apt-get install -y libvtk7-dev
           
       - name: Install Sctoch
+        if: matrix.scotch == 'on'
         run: |
           git clone https://gitlab.inria.fr/scotch/scotch.git && cd scotch
           git checkout v6.1.3
