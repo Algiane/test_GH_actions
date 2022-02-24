@@ -27,6 +27,9 @@ jobs:
         with:
           ref: ${{github.event.inputs.branch}}
 
+      - uses: actions/checkout@v2
+        if: github.event_name != 'workflow_dispatch'
+
       # Runs a single command using the runners shell
       - name: Send greeting
         run: |
