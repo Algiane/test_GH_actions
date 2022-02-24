@@ -1,4 +1,4 @@
-name: GitHub ubuntu CI
+name: GitHub windows CI
 
 # on: [push, pull_request]
 on:
