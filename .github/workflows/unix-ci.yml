@@ -18,7 +18,7 @@ on:
 
 # job
 jobs:
-  Mmg tests:
+  MultiArch:
     runs-on: [macOS-10.15,ubuntu-20.04]
 
     # Launch a matrix of jobs
