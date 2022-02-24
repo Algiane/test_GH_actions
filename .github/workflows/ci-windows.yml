@@ -22,8 +22,10 @@ jobs:
 
       - name: Configure Mmg      
         run: |
-          git clone https://github.com/MmgTools/mmg.git && cd mmg
-          mkdir build && cd build
+          git clone https://github.com/MmgTools/mmg.git
+          cd mmg
+          mkdir build
+          cd build
           cmake -DBUILD_TESTING=ON  ..
         shell: powershell
         
