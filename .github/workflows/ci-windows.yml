@@ -14,9 +14,10 @@ on:
         required: false
 
 jobs:
-  ubuntu: windows-2022
+  windows:
+    runs-on: windows-2022
   
-  steps:
+    steps:
       - uses: actions/checkout@v2
 
       - name: Configure Mmg      
