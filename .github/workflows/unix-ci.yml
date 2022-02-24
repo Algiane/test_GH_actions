@@ -25,16 +25,6 @@ jobs:
     strategy:
         matrix:
             build: [Release]
-            pattern: [on,off]
-            scotch: [on,off]
-            vtk: [off]
-            include:
-              # test vtk only without scotch and with delaunay insertion (more
-              # tests are useless)
-              - build: Release
-                pattern: off
-                scotch: off
-                vtk: on
 
     steps:
       # checkout the provided branch name if workflow is manually run
