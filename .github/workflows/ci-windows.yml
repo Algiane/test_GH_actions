@@ -32,7 +32,7 @@ jobs:
       - name: Build Mmg      
         run: |
           cd mmg/build
-          cmake -j "$NJOBS"  --build . --config Release
+          cmake -j "$NJOBS"  --build .
         shell: powershell
         env:
           NJOBS: "2"
@@ -40,4 +40,4 @@ jobs:
       - name: Test Mmg
         run: |
           cd mmg/build
-          ctest -R msh
+          ctest -C Release -R msh
