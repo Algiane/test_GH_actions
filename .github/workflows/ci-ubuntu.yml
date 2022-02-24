@@ -1,6 +1,17 @@
 name: GitHub ubuntu CI
 
-on: [push, pull_request]
+# on: [push, pull_request]
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      name:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Branch to test'
+        # Default value if no value is explicitly provided
+        default: 'main'
+        # Input has to be provided for the workflow to run
+        required: false
 
 jobs:
   ubuntu:
