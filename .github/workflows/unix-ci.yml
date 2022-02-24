@@ -26,6 +26,11 @@ jobs:
         matrix:
             os: [ubuntu-20.04,macOS-10.15]
             build: [Release,Debug]
+            pattern: [off]
+            include:
+              # add a specific test
+              - build: Release
+                pattern: on                
 
     steps:
       # checkout the provided branch name if workflow is manually run
@@ -45,5 +50,5 @@ jobs:
           elif [ "$RUNNER_OS" == "MacOS" ]; then
             echo "osx"
           else
-            echo "???"
+            echo "$RUNNER_OS"
           fi
