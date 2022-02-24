@@ -22,10 +22,10 @@ jobs:
     runs-on: ubuntu-20.04
   
     steps:
-      #- uses: actions/checkout@v2
-        #if: github.event_name == 'workflow_dispatch'
-      #  with:
-      #    ref: ${{github.event.inputs.branch}}
+      - uses: actions/checkout@v2
+        if: github.event_name == 'workflow_dispatch'
+        with:
+          ref: ${{github.event.inputs.branch}}
 
       # Runs a single command using the runners shell
       - name: Send greeting
