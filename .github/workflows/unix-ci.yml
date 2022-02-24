@@ -19,12 +19,13 @@ on:
 # job
 jobs:
   MultiArch:
-    runs-on: [macOS-10.15,ubuntu-20.04]
+    runs-on: ${{ matrix.os }}
 
     # Launch a matrix of jobs
     strategy:
         matrix:
-            build: [Release]
+            os: [ubuntu-20.04,macOS-10.15]
+            build: [Release,Debug]
 
     steps:
       # checkout the provided branch name if workflow is manually run
