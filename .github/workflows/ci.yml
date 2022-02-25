@@ -22,9 +22,9 @@ jobs:
     # Launch a matrix of jobs
     strategy:
         matrix:
-          os: [ubuntu-20.04,windows-2022]
+          os: [ubuntu-20.04,windows-2022,macos-10.15]
           pattern: [on,off]
-          scotch: [on,off]
+          #scotch: [on,off]
 
 
     steps:
@@ -41,14 +41,8 @@ jobs:
       - name: RunnerWin PatternOff
         if: matrix.pattern == 'off' && matrix.os == 'windows-2022'
         run: |
-          echo " RunnerWin PatternOff: $TOTO"
-
-      - name: RunnerWin
-        if: ${{ matrix.os == 'windows-2022' }}
-        run: |
-          echo " RunnerWin: $TOTO"
+          echo " RunnerWin $RUNNER_OS PatternOff: $TOTO"
 
       - name: RunnerUbuntu
-        if: ${{ matrix.os == 'ubuntu-20.04' }}
         run: |
-          echo " RunnerUbuntu: $TOTO"
+          echo " Runner $RUNNER_OS: $TOTO"
