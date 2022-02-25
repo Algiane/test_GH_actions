@@ -12,7 +12,10 @@ on:
         required: false
 
 env:
-  TOTO: "plop"
+  if: matrix.os == 'windows-2022'
+  TOTO: "windows"
+  if: matrix.os == 'ubuntu-20.04'
+  TOTO: "ubuntu"
 
 jobs:
   ci:
@@ -21,7 +24,7 @@ jobs:
     # Launch a matrix of jobs
     strategy:
         matrix:
-          os: [ubuntu-20.04,macos-10.15,windows-2022]
+          os: [ubuntu-20.04,windows-2022]
           pattern: [on,off]
           scotch: [on,off]
 
@@ -38,7 +41,7 @@ jobs:
         if: github.event_name != 'workflow_dispatch'
 
       - name: RunnerWin PatternOff
-        if: ${{ matrix.pattern == 'off' }} &&  ${{ matrix.os == 'windows-2022' }}
+        if: matrix.pattern == 'off' && matrix.os == 'windows-2022'
         run: |
           echo " RunnerWin PatternOff: $TOTO"
 
