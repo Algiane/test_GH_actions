@@ -62,13 +62,24 @@ jobs:
              echo "BUILD_CMD=cmake --build . --config Release" >> "$GITHUB_ENV"
              echo "TEST_CMD=-C Release" >> "$GITHUB_ENV"
           fi
-          echo "CFG_FLAG=\"-DCI_CONTEXT=ON -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=\$\{\{matrix.build\}\} -DPATTERN=\$\{\{matrix.pattern\}\} -DUSE_SCOTCH=\$\{\{matrix.scotch\}\} -DUSE_VTK=\$\{\{matrix.vtk\}\} -DTEST_LIBMMG=ON -DTEST_LIBMMGS=ON -DTEST_LIBMMG2D=ON -DTEST_LIBMMG3D=ON ..\"" >> "$GITHUB_ENV"
+          echo "CFG_FLAG=\"-DCI_CONTEXT=ON\
+          -DBUILD_TESTING=ON \\
+          -DCMAKE_BUILD_TYPE=\$\{\{matrix.build\}\} \\
+          -DPATTERN=\$\{\{matrix.pattern\}\} \\
+          -DUSE_SCOTCH=\$\{\{matrix.scotch\}\} \\
+          -DUSE_VTK=\$\{\{matrix.vtk\}\} \\
+          -DTEST_LIBMMG=ON \\
+          -DTEST_LIBMMGS=ON \\
+          -DTEST_LIBMMG2D=ON \\
+          -DTEST_LIBMMG3D=ON ..\"" >> "$GITHUB_ENV"
 
           echo "Environment variables:
             FORT_FLAG: ${{env.FORT_FLAG}}
             CFG_FLAG:  ${{env.CFG_FLAG }}
             BUILD_CMD: ${{env.BUILD_CMD}}
             TEST_CMD:  ${{env.TEST_CMD}} "
+
+            # Remark: previous print fail, we have to make the print after var filling
         env:
           NJOBS: "2"
 
