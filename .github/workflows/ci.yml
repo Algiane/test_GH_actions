@@ -11,6 +11,8 @@ on:
         default: 'main'
         required: false
 
+shell: bash
+
 env:
   TOTO: "plop"
 
@@ -62,7 +64,7 @@ jobs:
              echo "BUILD_CMD=cmake --build . --config Release" >> "$GITHUB_ENV"
              echo "TEST_CMD=-C Release" >> "$GITHUB_ENV"
           fi
-          echo "CFG_FLAG=\"-DCI_CONTEXT=ON\
+          echo "CFG_FLAG=\"-DCI_CONTEXT=ON \\
           -DBUILD_TESTING=ON \\
           -DCMAKE_BUILD_TYPE=\$\{\{matrix.build\}\} \\
           -DPATTERN=\$\{\{matrix.pattern\}\} \\
@@ -82,8 +84,6 @@ jobs:
             # Remark: previous print fail, we have to make the print after var filling
         env:
           NJOBS: "2"
-
-        shell: bash
 
       - name: Print env var outside context
         run: |
