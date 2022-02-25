@@ -15,10 +15,6 @@ env:
   if: matrix.os == 'windows-2022'
   TOTO: "windows"
 
-env:
-  if: matrix.os == 'ubuntu-20.04'
-  TOTO: "ubuntu"
-
 jobs:
   ci:
     runs-on: ${{ matrix.os }}
@@ -51,3 +47,8 @@ jobs:
         if: ${{ matrix.os == 'windows-2022' }}
         run: |
           echo " RunnerWin: $TOTO"
+
+      - name: RunnerUbuntu
+        if: ${{ matrix.os == 'ubuntu-20.04' }}
+        run: |
+          echo " RunnerUbuntu: $TOTO"
