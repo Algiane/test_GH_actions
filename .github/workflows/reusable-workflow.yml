@@ -18,7 +18,6 @@ jobs:
     strategy:
         matrix:
             os: [ubuntu-20.04,macos-10.15]
-            build: [ ${{ inputs.buildtype }} ]
             pattern: [on,off]
             scotch: [on,off]
 
@@ -27,7 +26,6 @@ jobs:
         run: |
           echo "${{ github.event.inputs.name }}:
             Os:      ${{ matrix.os }},
-            Build:   ${{ matrix.build }},
             Pattern: ${{ matrix.pattern }},
             Scotch:  ${{ matrix.scotch }}"
 
