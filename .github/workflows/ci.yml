@@ -50,8 +50,8 @@ jobs:
         run: |
           echo "${{ github.event.inputs.name }}:
             Os:      ${{ matrix.os }},
-            Pattern: ${{ matrix.pattern }},
-           
+            Pattern: ${{ matrix.pattern }}"
+
           if [ "$RUNNER_OS" == "macOS" ]; then
              echo "FORT_FLAG=\"-DCMAKE_Fortran_COMPILER=gfortran-11\"" >> "$GITHUB_ENV"
              echo "BUILD_CMD=make -j $NJOBS" >> "$GITHUB_ENV"
@@ -64,7 +64,7 @@ jobs:
           fi
           echo "CFG_FLAG=\"-DCI_CONTEXT=ON -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=${{matrix.build}} -DPATTERN=${{matrix.pattern}} -DUSE_SCOTCH=${{matrix.scotch}} -DUSE_VTK=${{matrix.vtk}} -DTEST_LIBMMG=ON -DTEST_LIBMMGS=ON -DTEST_LIBMMG2D=ON -DTEST_LIBMMG3D=ON ..\"" >> "$GITHUB_ENV"
 
-          echo "\nEnvironment variables:
+          echo "Environment variables:
             FORT_FLAG: env.FORT_FLAG
             CFG_FLAG:  env.CFG_FLAG
             BUILD_CMD: env.BUILD_CMD
@@ -74,7 +74,7 @@ jobs:
 
       - name: Print env var outside context
         run: |
-          echo "\nEnvironment variables:
+          echo "Environment variables:
             FORT_FLAG: env.FORT_FLAG
             CFG_FLAG:  env.CFG_FLAG
             BUILD_CMD: env.BUILD_CMD
