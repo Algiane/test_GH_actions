@@ -72,6 +72,8 @@ jobs:
         env:
           NJOBS: "2"
 
+        shell: bash
+
       - name: Print env var outside context
         run: |
           echo "Environment variables:
