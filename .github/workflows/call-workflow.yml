@@ -1,0 +1,12 @@
+name: Reusable WF
+
+on:
+  push:
+
+# job
+jobs:
+  call-generic-job:
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      buildtype: Release
+      testargs: -D LONG_TESTS=YES

@@ -1,0 +1,37 @@
+on:
+  workflow_call:
+    inputs:
+      buildtype:
+        required: true
+        type: string
+
+      testargs:
+        required: false
+        type: string
+
+# job
+jobs:
+  ci:
+    runs-on: ${{ matrix.os }}
+
+    # Launch a matrix of jobs
+    strategy:
+        matrix:
+            os: [ubuntu-20.04,macos-10.15]
+            build: ${{ inputs.buildtype }}
+            pattern: [on,off]
+            scotch: [on,off]
+
+    steps:
+      - name: Print options and set environment variables
+        run: |
+          echo "${{ github.event.inputs.name }}:
+            Os:      ${{ matrix.os }},
+            Build:   ${{ matrix.build }},
+            Pattern: ${{ matrix.pattern }},
+            Scotch:  ${{ matrix.scotch }}"
+
+      - name: Test Mmg
+        run: |
+          echo  ${{ inputs.testargs }}  ${{ inputs.buildtype }}
+          ctest -VV ${{ env.TEST_FLG }} ${{ inputs.testargs }}
