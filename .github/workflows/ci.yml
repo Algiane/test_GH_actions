@@ -11,8 +11,6 @@ on:
         default: 'main'
         required: false
 
-shell: bash
-
 env:
   TOTO: "plop"
 
@@ -84,6 +82,8 @@ jobs:
             # Remark: previous print fail, we have to make the print after var filling
         env:
           NJOBS: "2"
+
+        shell: bash
 
       - name: Print env var outside context
         run: |
