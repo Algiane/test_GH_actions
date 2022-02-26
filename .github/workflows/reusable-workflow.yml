@@ -53,4 +53,12 @@ jobs:
       - uses: actions/checkout@v2
         if: inputs.event_name == 'workflow_dispatch'
         with:
-          ref: ${{ inputs.event_branch }}
+          ref: ${{ inputs.branch_name }}
+
+      - name: is testable
+        if inputs.branch_name != ''
+          run: echo "ok"
+
+      - name: is testable
+        if inputs.branch_name
+          run: echo "ok2"
