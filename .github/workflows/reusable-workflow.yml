@@ -55,10 +55,14 @@ jobs:
         with:
           ref: ${{ inputs.branch_name }}
 
-      - name: is testable
+      - name: is branch name filled
         if: inputs.branch_name != ''
         run: echo "ok"
 
-      - name: is testable
+      - name: is branch name filled
         if: inputs.branch_name
         run: echo "ok2"
+
+      - name: is branch name empty
+        if: inputs.branch_name == ''
+        run: echo "ok3"
