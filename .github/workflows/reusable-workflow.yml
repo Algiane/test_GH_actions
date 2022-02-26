@@ -44,13 +44,13 @@ jobs:
 
       - name: Print param values
         run: |
-          echo  ${{ inputs.testargs }}  ${{ inputs.buildtype }} ${{ inputs.branchname }}
+          echo  ${{ inputs.testargs }}  ${{ inputs.buildtype }} ${{ inputs.branch_name }} ${{ inputs.branch_name }}
           echo " PARAMNAME: $INPUT_PARAMNAME"
 
       - uses: actions/checkout@v2
         if: ${{ inputs.event_name }} != 'workflow_dispatch'
 
       - uses: actions/checkout@v2
-        if: ${{ inputs.even_tname }} == 'workflow_dispatch'
+        if: ${{ inputs.event_name }} == 'workflow_dispatch'
         with:
           ref: ${{ inputs.event_branch }}
