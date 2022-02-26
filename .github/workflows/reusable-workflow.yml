@@ -2,10 +2,18 @@ on:
   workflow_call:
     inputs:
       buildtype:
-        required: true
+        description: 'CMAKE build type'
         type: string
+        default: Release
+        required: true
 
       testargs:
+        description: additionals ctest arguments
+        required: false
+        type: string
+
+      branchname:
+        description: branch name
         required: false
         type: string
 
@@ -17,7 +25,7 @@ jobs:
     # Launch a matrix of jobs
     strategy:
         matrix:
-            os: [ubuntu-20.04,macos-10.15]
+            os: [ubuntu-20.04]
             pattern: [on,off]
             scotch: [on,off]
 
@@ -29,7 +37,8 @@ jobs:
             Pattern: ${{ matrix.pattern }},
             Scotch:  ${{ matrix.scotch }}"
 
-      - name: Test Mmg
+      - name: Test Args val
         run: |
           echo  ${{ inputs.testargs }}  ${{ inputs.buildtype }}
+          echo "$INPUT_PARAMNAME ${{ inputs.branchname }}"
           ctest -VV ${{ env.TEST_FLG }} ${{ inputs.testargs }}

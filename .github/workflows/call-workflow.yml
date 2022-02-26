@@ -3,10 +3,29 @@ name: Reusable WF
 on:
   push:
 
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      branch:
+        # branch to test
+        description: 'branch to test'
+        # Default value if no value is explicitly provided
+        default: 'master'
+        required: false
+
 # job
 jobs:
-  call-generic-job:
+  call-push-job:
+    if: github.event_name != 'workflow_dispatch'
     uses: ./.github/workflows/reusable-workflow.yml
     with:
       buildtype: Release
       testargs: -D LONG_TESTS=YES
+
+  call-workflow-dispatch-job:
+    if: github.event_name == 'workflow_dispatch'
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      buildtype: Debug
+      testargs: -D LONG_TESTS=YES
+      branchname:  ${{github.event.inputs.branch}}
