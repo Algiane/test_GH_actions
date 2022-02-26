@@ -56,9 +56,9 @@ jobs:
           ref: ${{ inputs.branch_name }}
 
       - name: is testable
-        if inputs.branch_name != ''
+        if: inputs.branch_name != ''
           run: echo "ok"
 
       - name: is testable
-        if inputs.branch_name
+        if: inputs.branch_name
           run: echo "ok2"
