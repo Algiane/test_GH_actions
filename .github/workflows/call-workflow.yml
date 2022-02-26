@@ -21,6 +21,7 @@ jobs:
     with:
       buildtype: Release
       testargs: -D LONG_TESTS=YES
+      event_name: ${{ github.event_name }}
 
   call-workflow-dispatch-job:
     if: github.event_name == 'workflow_dispatch'
@@ -28,4 +29,5 @@ jobs:
     with:
       buildtype: Debug
       testargs: -D LONG_TESTS=YES
-      branchname:  ${{github.event.inputs.branch}}
+      event_name: ${{ github.event_name }}
+      branch_name:  ${{github.event.inputs.branch}}
