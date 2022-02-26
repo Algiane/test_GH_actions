@@ -44,7 +44,7 @@ jobs:
 
       - name: Print param values
         run: |
-          echo  ${{ inputs.testargs }}  ${{ inputs.buildtype }} ${{ inpus.branchname }}
+          echo  ${{ inputs.testargs }}  ${{ inputs.buildtype }} ${{ inputs.branchname }}
           echo " PARAMNAME: $INPUT_PARAMNAME"
 
       - uses: actions/checkout@v2
