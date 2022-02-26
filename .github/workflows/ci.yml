@@ -66,8 +66,8 @@ jobs:
           -DBUILD_TESTING=ON \\
           -DCMAKE_BUILD_TYPE=\$\{\{matrix.build\}\} \\
           -DPATTERN=\$\{\{matrix.pattern\}\} \\
-          -DUSE_SCOTCH=\$\{\{matrix.scotch\}\} \\
-          -DUSE_VTK=\$\{\{matrix.vtk\}\} \\
+          -DUSE_SCOTCH=${{matrix.scotch}} \\
+          -DUSE_VTK=\${{matrix.vtk}} \\
           -DTEST_LIBMMG=ON \\
           -DTEST_LIBMMGS=ON \\
           -DTEST_LIBMMG2D=ON \\
