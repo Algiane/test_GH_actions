@@ -31,8 +31,9 @@ jobs:
     steps:
     - name: Check that the PR is ready to be merged
       run: |
+        echo "plop ${{ github.event.pull_request.number  }}"
         labels=$(curl -H "Accept: application/vnd.github+json" \
-           https://api.github.com/repos/Algiane/${{ github.repository }}/pulls/${{ github.event.number }} \
+           https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }} \
            | jq '.labels')
         ready_label="ready to be merged"
         echo "Is PR Ready to be Merged? (Check for $ready_label label)"
@@ -46,7 +47,7 @@ jobs:
     - name: Check wether the PR is a draft
       run: |
         draft_status=$(curl -H "Accept: application/vnd.github+json" \
-           https://api.github.com/repos/Algiane/${{ github.repository }}/pulls/${{ github.event.number }} \
+           https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }} \
            | jq '.draft')
         echo "Is PR a draft? (Check PR's draft status )"
         echo $draft_status
