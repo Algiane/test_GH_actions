@@ -24,9 +24,41 @@ on:
 
 # job
 jobs:
+  # PR must be labeled "ready to be merged" to run.
+  # This job will fail if this is not the case.
+  check_ready_to_be_merged:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check that the PR is ready to be merged
+      run: |
+        labels=$(curl -H "Accept: application/vnd.github+json" \
+           https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.number }} \
+           | jq '.labels')
+        ready_label="ready to be merged"
+        echo "Is PR Ready to be Merged? (Check for $ready_label label)"
+        echo "Labels found are: $labels"
+        if [[ $labels == *"$ready_label"* ]]; then "true" ; else "false"; fi
+
+  # Matrix jobs will be cancelled if PR is a draft.
+  check_is_draft:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check wether the PR is a draft
+      run: |
+        draft_status=$(curl -H "Accept: application/vnd.github+json" \
+           https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.number }} \
+           | jq '.draft')
+        echo "Is PR a draft? (Check PR's draft status )"
+        echo $draft_status
+        if [[ $draft_status == true ]]; then "true" ; else "false"; fi
+
+
   ci:
-    if: "! contains(github.event.head_commit.message, '[skip ci]')"
     runs-on: ${{ matrix.os }}
+
+    needs:
+    - check_is_draft
+    - check_ready_to_be_merged
 
     # Launch a matrix of jobs
     strategy:
