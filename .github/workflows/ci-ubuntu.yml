@@ -40,7 +40,9 @@ jobs:
     steps:
     - name: Check if the PR is not ready to be merged
       if: ${{ contains(needs.check_ready_to_be_merged.result, 'failure') }}
-      run: echo " plop ${{ needs.check_ready_to_be_merged.result }}"
+      run: |
+        echo " plop ${{ needs.check_ready_to_be_merged.result }}"
+        false;
 
   check_not_ready2:
     if: ${{ always() }}
@@ -49,7 +51,9 @@ jobs:
     steps:
     - name: Check 2 if the PR is not ready to be merged
       if: ${{ contains(needs.check_ready_to_be_merged.result, 'false') }}
-      run: echo " plop2 ${{ needs.check_ready_to_be_merged.result }}"
+      run: |
+        echo " plop2 ${{ needs.check_ready_to_be_merged.result }}"
+        false;
 
     
   # Matrix jobs will be cancelled if PR is a draft.
