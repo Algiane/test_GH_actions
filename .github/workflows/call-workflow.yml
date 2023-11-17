@@ -1,7 +1,7 @@
 name: Reusable WF
 
 on:
-  push:
+  #push:
 
   workflow_dispatch:
     # Inputs the workflow accepts.
