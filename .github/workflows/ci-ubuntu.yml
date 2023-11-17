@@ -34,7 +34,7 @@ jobs:
         if [[ $labels == *"$ready_label"* ]]; then "true" ; else "false"; fi
 
   check_not_ready:
-    if: ${{ always }}
+    if: ${{ always() }}
     needs: check_ready_to_be_merged
     runs-on: ubuntu-20.04
     steps:
@@ -43,7 +43,7 @@ jobs:
       run: echo " plop ${{ needs.check_ready_to_be_merged.result }}"
 
   check_not_ready2:
-    if: ${{ always }}
+    if: ${{ always() }}
     needs: check_ready_to_be_merged
     runs-on: ubuntu-20.04
     steps:
