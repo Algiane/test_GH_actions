@@ -65,30 +65,38 @@ jobs:
         echo $draft_status
         if [[ $draft_status == true ]]; then "true" ; else "false"; fi
 
-  ubuntu:
+  draft_and_ready:
     runs-on: ubuntu-20.04
 
     needs:
     - check_is_draft
     - check_ready_to_be_merged
 
-    strategy:
-        matrix:
-            build: [Release]
-            pattern: [on,off]
+    steps:
+      - name: draft and ready
+        run: |
+          echo "draft and ready"
+
+  draft_and_not_ready:
+    runs-on: ubuntu-20.04
+
+    needs:
+    - check_is_draft
+    - check_not_ready
 
     steps:
-      - uses: actions/checkout@v2
+      - name: draft and not ready
+        run: |
+          echo "draft and not ready"          
+          
+  draft_and_not_ready2:
+    runs-on: ubuntu-20.04
 
-      - name: Configure Mmg
+    needs:
+    - check_is_draft
+    - check_not_ready2
+
+    steps:
+      - name: draft and not ready2
         run: |
-          echo "${{ github.event.inputs.name }}: Build ${{ matrix.build }}, Pattern ${{ matrix.pattern }}, Scotch  ${{ matrix.scotch }}, VTK  ${{ matrix.vtk }}"
-          git clone https://github.com/MmgTools/mmg.git && cd mmg
-          mkdir build && cd build
-          cmake -DCI_CONTEXT=ON -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=${{matrix.build}} -DPATTERN=${{matrix.pattern}} -DUSE_SCOTCH=${{matrix.scotch}} -DUSE_VTK={{matrix.vtk}} -DCMAKE_Fortran_COMPILER=gfortran-9 -DTEST_LIBMMG=ON -DTEST_LIBMMGS=ON -DTEST_LIBMMG2D=ON -DTEST_LIBMMG3D=ON ..
-      - name: Build Mmg
-        run: |
-          cd mmg/build
-          make -j "$NJOBS"
-        env:
-          NJOBS: "2"
+          echo "draft and not ready2"      
