@@ -42,6 +42,7 @@ jobs:
       if: ${{ contains(needs.check_ready_to_be_merged.result, 'failure') }}
       run: |
         echo " plop ${{ needs.check_ready_to_be_merged.result }}"
+        if ${{ contains(needs.check_ready_to_be_merged.result, 'failure') }}; then "false"; else "true"; fi
         false;
 
   check_not_ready2:
