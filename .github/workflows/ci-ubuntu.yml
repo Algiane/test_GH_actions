@@ -39,7 +39,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - name: Check if the PR is not ready to be merged
-      if: ${{ contains(needs.check_ready_to_be_merged.result, 'failure') }}
       run: |
         echo " plop ${{ needs.check_ready_to_be_merged.result }}"
         if ${{ contains(needs.check_ready_to_be_merged.result, 'failure') }}; then "false"; else "true"; fi
@@ -51,8 +50,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - name: Check 2 if the PR is not ready to be merged
-      if: ${{ contains(needs.check_ready_to_be_merged.result, 'false') }}
       run: |
+        if ${{ contains(needs.check_ready_to_be_merged.result, 'false') }}; then "false"; else "true"; fi
         echo " plop2 ${{ needs.check_ready_to_be_merged.result }}"
         false;
 
