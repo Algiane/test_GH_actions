@@ -1,7 +1,8 @@
 name: GitHub ubuntu CI
 
-# on: [push, pull_request]
 on:
+  pull_request:
+
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
@@ -14,78 +15,68 @@ on:
         required: false
 
 jobs:
-  ubuntu:
+
+  # PR must be labeled "ready to be merged" to run.
+  # This job will fail if this is not the case.
+  check_ready_to_be_merged:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check that the PR is ready to be merged
+      run: |
+        echo "event name ${{ github.event.inputs.name }}"
+        echo "plop ${{ github.event.pull_request.number  }} ${{ github.event.number }}"
+        labels=$(curl -H "Accept: application/vnd.github+json" \
+           https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.number }} \
+           | jq '.labels')
+        ready_label="ready to be merged"
+        echo "Is PR Ready to be Merged? (Check for $ready_label label)"
+        echo "Labels found are: $labels"
+        if [[ $labels == *"$ready_label"* ]]; then "true" ; else "false"; fi
+
+  check_not_ready:
+    if: ${{ always() }}
+    needs: check_ready_to_be_merged
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check if the PR is not ready to be merged
+      run: |
+        uname -a
+        echo " plop ${{ needs.check_ready_to_be_merged.result }}"
+        if ${{ contains(needs.check_ready_to_be_merged.result, 'failure') }}; then "true"; else "false"; fi
+    
+  # Matrix jobs will be cancelled if PR is a draft.
+  check_is_draft:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check wether the PR is a draft
+      run: |
+        draft_status=$(curl -H "Accept: application/vnd.github+json" \
+           https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.number }} \
+           | jq '.draft')
+        echo "Is PR a draft? (Check PR's draft status )"
+        echo $draft_status
+        if [[ $draft_status == true ]]; then "true" ; else "false"; fi
+
+  draft_and_ready:
     runs-on: ubuntu-20.04
 
-    strategy:
-        matrix:
-            build: [Release,Debug]
-            pattern: [on,off]
-            scotch: [on,off]
-            vtk: [off]
-            include:
-              # run vtk only without scotch and with delaunay insertion
-              - build: Release
-                pattern: off
-                scotch: off
-                vtk: on
-                
-              - build: Debug
-                pattern: off
-                scotch: off
-                vtk: on
+    needs:
+    - check_is_draft
+    - check_ready_to_be_merged
 
     steps:
-      - uses: actions/checkout@v2
+      - name: draft and ready
+        run: |
+          echo "draft and ready"
 
-      - name: Install VTK
-        if: matrix.vtk == 'on'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libvtk7-dev
-          
-      - name: Install Sctoch
-        if: matrix.scotch == 'on'
-        run: |
-          git clone https://gitlab.inria.fr/scotch/scotch.git && cd scotch
-          git checkout v6.1.3
-          cd src && cp Make.inc/Makefile.inc.x86-64_pc_linux2 Makefile.inc
-          make scotch -j "$NJOBS"
-          make install scotch -j "$NJOBS"
-        env:
-          NJOBS: "2"
+  draft_and_not_ready:
+    runs-on: ubuntu-20.04
 
-      - name: Install LibCommons
-        if: matrix.elas == 'on'
-        run: |
-          git clone https://github.com/ISCDtoolbox/Commons.git && cd Commons
-          mkdir build
-          cd build && cmake ..
-          make install
-          
-      - name: Install LinearElasticity
-        if: matrix.elas == 'on'
-        run: |
-          git clone https://github.com/ISCDtoolbox/LinearElasticity.git && cd LinearElasticity
-          mkdir build
-          cd build && cmake ..
-          make install
-      - name: Configure Mmg      
-        run: |
-          echo "${{ github.event.inputs.name }}: Build ${{ matrix.build }}, Pattern ${{ matrix.pattern }}, Scotch  ${{ matrix.scotch }}, VTK  ${{ matrix.vtk }}"
-          git clone https://github.com/MmgTools/mmg.git && cd mmg
-          mkdir build && cd build
-          cmake -DCI_CONTEXT=ON -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=${{matrix.build}} -DPATTERN=${{matrix.pattern}} -DUSE_SCOTCH=${{matrix.scotch}} -DUSE_VTK={{matrix.vtk}} -DCMAKE_Fortran_COMPILER=gfortran-9 -DTEST_LIBMMG=ON -DTEST_LIBMMGS=ON -DTEST_LIBMMG2D=ON -DTEST_LIBMMG3D=ON ..
-      - name: Build Mmg      
-        run: |
-          cd mmg/build
-          make -j "$NJOBS"
-        env:
-          NJOBS: "2"
-          
-      - name: Test Mmg      
-        run: |
-          cd mmg/build
-          ctest -VV
+    needs:
+    - check_is_draft
+    - check_not_ready
 
-
+    steps:
+      - name: draft and not ready
+        run: |
+          echo "draft and not ready"
