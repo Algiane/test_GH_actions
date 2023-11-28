@@ -40,6 +40,7 @@ jobs:
     steps:
     - name: Check if the PR is not ready to be merged
       run: |
+        uname -a
         echo " plop ${{ needs.check_ready_to_be_merged.result }}"
         if ${{ contains(needs.check_ready_to_be_merged.result, 'failure') }}; then "true"; else "false"; fi
     
