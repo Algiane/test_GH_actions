@@ -25,12 +25,7 @@ jobs:
 
       - name: ssh into the ppc64le machine and execute the script
         run: |
-          echo -e "Display the machine architecture\n" 
-          uname -a
-          ls
-          pwd
           echo -e "SSH into the Power machine and execute the script\n"
-          ssh ${{ secrets.BOUNCE_USERNAME }}@${{ secrets.BOUNCE_MACHINE_IP }} < script.sh
-
-          echo -e "Last bounce\n"
-          ssh ${{ secrets.PPC64LE_USERNAME }}@${{ secrets.PPC64LE_MACHINE_IP }} < script.sh
+          ssh ${{ secrets.BOUNCE_USERNAME }}@${{ secrets.BOUNCE_MACHINE_IP }} < arch
+          ssh ${{ secrets.BOUNCE_USERNAME }}@${{ secrets.BOUNCE_MACHINE_IP }} < echo "coucou" < arch
+          ssh ${{ secrets.BOUNCE_USERNAME }}@${{ secrets.BOUNCE_MACHINE_IP }} <  ssh ${{ secrets.PPC64LE_USERNAME }}@${{ secrets.PPC64LE_MACHINE_IP }} < arch
