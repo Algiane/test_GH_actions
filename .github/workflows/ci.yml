@@ -2,7 +2,7 @@ name: GitHub CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
   workflow_dispatch:
 
@@ -31,5 +31,6 @@ jobs:
           pwd
           echo -e "SSH into the Power machine and execute the script\n"
           ssh ${{ secrets.BOUNCE_USERNAME }}@${{ secrets.BOUNCE_MACHINE_IP }} < script.sh
-          ssh ${{ secrets.PPC64LE_USERNAME }}@${{ secrets.PPC64LE_MACHINE_IP }} < uname -a
-          uname -a
+
+          echo -e "Last bounce\n"
+          ssh ${{ secrets.PPC64LE_USERNAME }}@${{ secrets.PPC64LE_MACHINE_IP }} < script.sh
