@@ -34,17 +34,19 @@ jobs:
                 pattern: off
                 scotch: off
                 vtk: on
+                os: ubuntu-20.04
                 
               - build: Debug
                 pattern: off
                 scotch: off
                 vtk: on
+                os: ubuntu-20.04
 
     steps:
-      #- name: test if
-      #  if: (matrix.os == 'ubuntu-20.04' && inputs.code_coverage =='true' )
-      #  run: |
-      #    echo  "Code cov ? ${{ inputs.code_coverage }}"
+      - name: test if
+        if: (matrix.os == 'ubuntu-20.04' && inputs.code_coverage =='true' )
+        run: |
+          echo  "Code cov ? ${{ inputs.code_coverage }}"
 
       - uses: actions/checkout@v2
 
