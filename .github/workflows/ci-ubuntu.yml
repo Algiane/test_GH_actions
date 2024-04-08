@@ -48,12 +48,6 @@ jobs:
         run: |
           echo  "Code cov ? ${{ inputs.code_coverage }}"
 
-      - name: success
-        needs:
-          - test_if
-        run: |
-          echo "coucou 2"
-
       - uses: actions/checkout@v2
 
       - name: Install VTK
