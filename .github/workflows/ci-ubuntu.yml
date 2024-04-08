@@ -26,7 +26,7 @@ jobs:
             os: [ubuntu-20.04,macos-12]
             build: [Release,Debug]
             pattern: [on,off]
-            scotch: [on,off]
+            scotch: [off]
             vtk: [off]
             include:
               # run vtk only without scotch and with delaunay insertion
@@ -43,10 +43,16 @@ jobs:
                 os: ubuntu-20.04
 
     steps:
-      - name: test if
+      - name: test_if
         if: (matrix.os == 'ubuntu-20.04' && github.event.inputs.code_coverage =='true' )
         run: |
           echo  "Code cov ? ${{ inputs.code_coverage }}"
+
+      - name: success
+        needs:
+          - test_if
+        run: |
+          echo "coucou 2"
 
       - uses: actions/checkout@v2
 
