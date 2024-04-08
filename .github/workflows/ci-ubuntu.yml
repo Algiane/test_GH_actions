@@ -44,14 +44,6 @@ jobs:
         if: (matrix.os == 'ubuntu-20.04' && inputs.code_coverage =='true' )
         run: |
           echo  "Code cov ? ${{ inputs.code_coverage }}"
-        env:
-          branch: "toto"
-          name: "titi"
-
-      - name: env var?
-        run: |
-          echo "branch ? ${{branch}}"
-          echo "name ? ${{name}}"
 
       - uses: actions/checkout@v2
 
