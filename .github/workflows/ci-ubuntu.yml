@@ -2,6 +2,7 @@ name: GitHub ubuntu CI
 
 # on: [push, pull_request]
 on:
+  push:
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
