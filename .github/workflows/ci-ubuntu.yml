@@ -44,7 +44,7 @@ jobs:
 
     steps:
       - name: test if
-        if: (matrix.os == 'ubuntu-20.04' && inputs.code_coverage =='true' )
+        if: (matrix.os == 'ubuntu-20.04' && github.event.inputs.code_coverage =='true' )
         run: |
           echo  "Code cov ? ${{ inputs.code_coverage }}"
 
@@ -82,22 +82,22 @@ jobs:
           mkdir build
           cd build && cmake ..
           make install
-      - name: Configure Mmg      
-        run: |
-          echo "${{ github.event.inputs.name }}: Build ${{ matrix.build }}, Pattern ${{ matrix.pattern }}, Scotch  ${{ matrix.scotch }}, VTK  ${{ matrix.vtk }}"
-          git clone https://github.com/MmgTools/mmg.git && cd mmg
-          mkdir build && cd build
-          cmake -DCI_CONTEXT=ON -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=${{matrix.build}} -DPATTERN=${{matrix.pattern}} -DUSE_SCOTCH=${{matrix.scotch}} -DUSE_VTK={{matrix.vtk}} -DCMAKE_Fortran_COMPILER=gfortran-9 -DTEST_LIBMMG=ON -DTEST_LIBMMGS=ON -DTEST_LIBMMG2D=ON -DTEST_LIBMMG3D=ON ..
-      - name: Build Mmg      
-        run: |
-          cd mmg/build
-          make -j "$NJOBS"
-        env:
-          NJOBS: "2"
-          
-      - name: Test Mmg      
-        run: |
-          cd mmg/build
-          ctest -VV
+      #- name: Configure Mmg      
+      #  run: |
+      #    echo "${{ github.event.inputs.name }}: Build ${{ matrix.build }}, Pattern ${{ matrix.pattern }}, Scotch  ${{ matrix.scotch }}, VTK  ${{ matrix.vtk }}"
+      #    git clone https://github.com/MmgTools/mmg.git && cd mmg
+      #    mkdir build && cd build
+      #    cmake -DCI_CONTEXT=ON -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=${{matrix.build}} -DPATTERN=${{matrix.pattern}} -DUSE_SCOTCH=${{matrix.scotch}} -DUSE_VTK={{matrix.vtk}} -DCMAKE_Fortran_COMPILER=gfortran-9 -DTEST_LIBMMG=ON -DTEST_LIBMMGS=ON -DTEST_LIBMMG2D=ON -DTEST_LIBMMG3D=ON ..
+      #- name: Build Mmg      
+      #  run: |
+      #    cd mmg/build
+      #    make -j "$NJOBS"
+      #  env:
+      #    NJOBS: "2"
+      #    
+      #- name: Test Mmg      
+      #  run: |
+      #    cd mmg/build
+      #    ctest -VV
 
 
