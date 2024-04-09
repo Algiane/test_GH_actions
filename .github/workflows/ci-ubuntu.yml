@@ -22,6 +22,7 @@ jobs:
   ubuntu:
     runs-on: ${{ matrix.os }}
     strategy:
+        fail-fast: false
         matrix:
             os: [ubuntu-20.04,macos-12]
             #build: [Release,Debug]
@@ -64,7 +65,7 @@ jobs:
 
       - name: test flag accu - output
         run: |
-          cmake  -S. ${{ env.CMAKE_C_FLG }}
+          cmake  -V ${{ env.CMAKE_C_FLG }}
 
 
       - name: Install VTK
