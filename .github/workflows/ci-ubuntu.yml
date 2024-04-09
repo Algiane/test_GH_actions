@@ -46,7 +46,25 @@ jobs:
       - name: test_if
         if: (matrix.os == 'ubuntu-20.04' && github.event.inputs.code_coverage =='true' )
         run: |
-          echo  "Code cov ? ${{ inputs.code_coverage }}"
+          echo  " Code cov ? ${{ inputs.code_coverage }} "
+
+      - name: test flag accu - step 1
+        if: (matrix.os == 'ubuntu-20.04')
+        run: |
+          echo "C_FLG=-DMMG_COMPARABLE_OUTPUT" >> "$GITHUB_ENV"
+          echo "C_FLG_PROF=-fprofile-arcs -ftest-coverage" >> "$GITHUB_ENV"
+
+
+      - name: test flag accu - step 2
+        if: ${{ env.C_FLAG == '' ||  env.C_FLAG_PROF == '' }}
+        run: |
+          echo "CMAKE_C_FLG=-DCMAKE_C_FLAGS=\"${{ C_FLG }} ${{ C_FLG_PROF }}\"" >> "$GITHUB_ENV"
+
+      - name: test flag accu - output
+        run: |
+          echo "CMAKE_C_FLG : ${{ CMAKE_C_FLG }}
+
+
 
       - uses: actions/checkout@v2
 
