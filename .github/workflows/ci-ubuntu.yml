@@ -24,23 +24,23 @@ jobs:
     strategy:
         matrix:
             os: [ubuntu-20.04,macos-12]
-            build: [Release,Debug]
-            pattern: [on,off]
-            scotch: [off]
-            vtk: [off]
-            include:
+            #build: [Release,Debug]
+            #pattern: [on,off]
+            #scotch: [off]
+            #vtk: [off]
+            #include:
               # run vtk only without scotch and with delaunay insertion
-              - build: Release
-                pattern: off
-                scotch: off
-                vtk: on
-                os: ubuntu-20.04
+              #- build: Release
+                #pattern: off
+                #scotch: off
+                #vtk: on
+                #os: ubuntu-20.04
                 
-              - build: Debug
-                pattern: off
-                scotch: off
-                vtk: on
-                os: ubuntu-20.04
+              #- build: Debug
+                #pattern: off
+                #scotch: off
+                #vtk: on
+                #os: ubuntu-20.04
 
     steps:
       - name: test_if
@@ -56,18 +56,16 @@ jobs:
 
 
       - name: test flag accu - step 2
+        if: ( ${{ env.C_FLAG != '' || env.C_FLAG_PROF != '' }} )
         run: |
-          if [[ ${{ env.C_FLAG != '' }} || ${{ env.C_FLAG_PROF != '' }} ]];then
-            echo "CMAKE_C_FLG=-DCMAKE_C_FLAGS=\"${{ env.C_FLG }} ${{ env.C_FLG_PROF }}\"" >> "$GITHUB_ENV"
-          fi
+          echo "CMAKE_C_FLG=-DCMAKE_C_FLAGS=\"${{ env.C_FLG }} ${{ env.C_FLG_PROF }}\"" >> "$GITHUB_ENV"
+
+      - uses: actions/checkout@v2
 
       - name: test flag accu - output
         run: |
-          echo "CMAKE_C_FLG : ${{ env.CMAKE_C_FLG }}"
+          cmake  -S. ${{ env.CMAKE_C_FLG }}
 
-
-
-      - uses: actions/checkout@v2
 
       - name: Install VTK
         if: matrix.vtk == 'on'
