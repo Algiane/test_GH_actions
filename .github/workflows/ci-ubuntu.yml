@@ -63,7 +63,7 @@ jobs:
 
       - name: test flag accu - output
         run: |
-          echo "CMAKE_C_FLG : ${{ env.CMAKE_C_FLG }}
+          echo "CMAKE_C_FLG : ${{ env.CMAKE_C_FLG }}"
 
 
 
