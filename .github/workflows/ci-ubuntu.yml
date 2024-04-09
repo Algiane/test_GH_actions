@@ -56,13 +56,14 @@ jobs:
 
 
       - name: test flag accu - step 2
-        if: ( ${{ env.C_FLAG != '' }} || ${{ env.C_FLAG_PROF != '' }} )
         run: |
-          echo "CMAKE_C_FLG=-DCMAKE_C_FLAGS=\"${{ C_FLG }} ${{ C_FLG_PROF }}\"" >> "$GITHUB_ENV"
+          if [[ ${{ env.C_FLAG != '' }} || ${{ env.C_FLAG_PROF != '' }} ) ]];then
+            echo "CMAKE_C_FLG=-DCMAKE_C_FLAGS=\"${{ env.C_FLG }} ${{ env.C_FLG_PROF }}\"" >> "$GITHUB_ENV"
+          fi
 
       - name: test flag accu - output
         run: |
-          echo "CMAKE_C_FLG : ${{ CMAKE_C_FLG }}
+          echo "CMAKE_C_FLG : ${{ env.CMAKE_C_FLG }}
 
 
 
