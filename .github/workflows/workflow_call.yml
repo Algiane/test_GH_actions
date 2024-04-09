@@ -1,0 +1,33 @@
+name: Long tests
+
+on:
+  # run tests on push events
+  push:
+  # run tests on PR events
+  pull_request:
+    types: [opened, synchronize]
+
+  # run tests manually on a given branch (default is master)
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      branch:
+        # branch to test
+        description: 'branch to test'
+        # Default value if no value is explicitly provided
+        default: 'master'
+        required: false
+      code_coverage:
+        type: boolean
+        # Default value if no value is explicitly provided
+        default: true
+        required: false
+
+
+# job
+jobs:
+  mmg-debug:
+    uses: ./.github/workflows/main-job.yml
+    with:
+      branch_name:  ${{github.event.inputs.branch}}
+      code_coverage:  ${{github.event.inputs.code_coverage || true}}
