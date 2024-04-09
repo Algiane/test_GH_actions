@@ -57,7 +57,7 @@ jobs:
 
 
       - name: test flag accu - step 2
-        if: ( ${{ env.C_FLAG != '' || env.C_FLAG_PROF != '' }} )
+        if: ${{ env.C_FLAG }}
         run: |
           echo "CMAKE_C_FLG=-DCMAKE_C_FLAGS=\"${{ env.C_FLG }} ${{ env.C_FLG_PROF }}\"" >> "$GITHUB_ENV"
 
@@ -65,7 +65,7 @@ jobs:
 
       - name: test flag accu - output
         run: |
-          cmake  -V ${{ env.CMAKE_C_FLG }}
+          cmake  --version ${{ env.CMAKE_C_FLG }}
 
 
       - name: Install VTK
