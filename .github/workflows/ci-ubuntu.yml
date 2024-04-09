@@ -65,6 +65,7 @@ jobs:
 
       - name: test flag accu - output
         run: |
+          cmake  --version -DCMAKE_C_FLAGS="${{ env.C_FLG }} ${{ env.C_FLG_PROF }}"
           cmake  --version ${{ env.CMAKE_C_FLG }}
 
 
