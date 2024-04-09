@@ -1,11 +1,8 @@
-name: Long tests
+name: workflow_call
 
 on:
   # run tests on push events
   push:
-  # run tests on PR events
-  pull_request:
-    types: [opened, synchronize]
 
   # run tests manually on a given branch (default is master)
   workflow_dispatch:
