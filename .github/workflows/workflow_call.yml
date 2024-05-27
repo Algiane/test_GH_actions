@@ -27,4 +27,3 @@ jobs:
     uses: ./.github/workflows/main-job.yml
     with:
       branch_name:  ${{github.event.inputs.branch}}
-      code_coverage:  ${{github.event.inputs.code_coverage || true}}
