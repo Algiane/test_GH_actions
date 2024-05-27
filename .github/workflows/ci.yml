@@ -51,7 +51,7 @@ jobs:
         run: |
           docker pull ubuntu:20.04
           docker tag  ubuntu:20.04  7g8efcehpff/pangea3-almalinux8-gcc9.4-openmpi4.1.2-cuda11.5.0-openblas0.3.18:ci
-          docker push
+          docker push 7g8efcehpff/pangea3-almalinux8-gcc9.4-openmpi4.1.2-cuda11.5.0-openblas0.3.18:ci
             # Remark: previous print fail, we have to make the print after var filling
         env:
           NJOBS: "2"
