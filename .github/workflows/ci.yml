@@ -87,8 +87,10 @@ jobs:
 
           run: |
             docker pull ubuntu:20.04
-            docker tag  ubuntu:20.04  7g8efcehpff/pangea3-almalinux8-gcc9.4-openmpi4.1.2-cuda11.5.0-openblas0.3.18:ci
-            docker push 7g8efcehpff/pangea3-almalinux8-gcc9.4-openmpi4.1.2-cuda11.5.0-openblas0.3.18:ci-no-run-on-arch
+            docker tag  ubuntu:20.04  7g8efcehpff/pangea3-almalinux8-gcc9.4-openmpi4.1.2-cuda11.5.0-openblas0.3.18:ci-run-on-arch
+            docker login -u  ${{ secrets.DOCKER_USERNAME }}
+            docker push 7g8efcehpff/pangea3-almalinux8-gcc9.4-openmpi4.1.2-cuda11.5.0-openblas0.3.18:ci-run-on-arch
+            docker logout
 
       - name: Print env var outside context
         run: |
