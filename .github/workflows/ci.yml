@@ -22,7 +22,7 @@ jobs:
     # Launch a matrix of jobs
     strategy:
         matrix:
-          os: [ipinriap24]
+          os: [self-hosted]
           #pattern: [on,off]
 
 
