@@ -22,9 +22,8 @@ jobs:
     # Launch a matrix of jobs
     strategy:
         matrix:
-          os: [self-hosted]
+          os: [ipinriap24]
           #pattern: [on,off]
-          scotch: [on,off]
 
 
     steps:
@@ -37,15 +36,6 @@ jobs:
       # checkout the event branch for automatic workflows
       - uses: actions/checkout@v2
         if: github.event_name != 'workflow_dispatch'
-
-      - name: RunnerWin PatternOff
-        if: matrix.pattern == 'off' && matrix.os == 'windows-2022'
-        run: |
-          echo " RunnerWin $RUNNER_OS PatternOff: $TOTO"
-
-      - name: Runner All
-        run: |
-          echo " Runner $RUNNER_OS : $TOTO"
 
       # Following authentication to dockerhub using login-action doesn't work in run-on-arch-action as we setup a new docker install inside a container
       #- name: Login to DockerHub
