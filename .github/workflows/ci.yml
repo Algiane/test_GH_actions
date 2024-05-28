@@ -44,6 +44,8 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: sleep
+        run: sleep 30
 
       #- name: pull and push
       #  run: |
