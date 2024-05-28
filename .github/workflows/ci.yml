@@ -55,7 +55,7 @@ jobs:
           #docker login -u ${{ secrets.DOCKER_USERNAME }} --password  ${{ secrets.DOCKER_PASSWORD }}
           docker pull ppc64le/ubuntu:20.04
           docker tag  ubuntu:20.04  7g8efcehpff/test:test
-          docker push test:test
+          docker push 7g8efcehpff/test:test
 
 
       #
