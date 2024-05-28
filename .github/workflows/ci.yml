@@ -47,7 +47,7 @@ jobs:
 
       - name: pull and push
         run: |
-          docker logtout
+          docker logout
           docker login -u ${{ secrets.DOCKER_USERNAME }} --password  ${{ secrets.DOCKER_PASSWORD }}
           docker pull ubuntu:20.04
           docker tag  ubuntu:20.04  7g8efcehpff/pangea3-almalinux8-gcc9.4-openmpi4.1.2-cuda11.5.0-openblas0.3.18:ci
