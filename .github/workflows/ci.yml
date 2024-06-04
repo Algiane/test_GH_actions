@@ -49,12 +49,23 @@ jobs:
         with:
           platforms: ppc64le
 
-      - name: pull and push
+      - name: run and mount
         run: |
-          docker pull ppc64le/ubuntu:20.04
-          docker tag  ppc64le/ubuntu:20.04  7g8efcehpff/test:test
-          docker push 7g8efcehpff/test:test
+          docker run -v /tmp/test-geos:/tmp:ro ubuntu:22-04 apt-update -y
 
+      - name: print image
+        run: |
+          docker images
+
+      - name: print container
+        run: |
+          docker container ls
+
+      - name: echo
+        run: |
+          ls /tmp
+          ls /tmp/test-geos
+          less /tmp/test-geos/toto
 
       #
       #- name: pull and push with run on arch
