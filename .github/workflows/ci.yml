@@ -51,7 +51,8 @@ jobs:
 
       - name: run and mount
         run: |
-          docker run -v /tmp/test-geos:/tmp:ro ubuntu:22.04 apt update -y
+          docker run -v /tmp/test-geos:/titi:ro ubuntu:22.04 apt update -y
+          docker run -v /tmp/test-geos:/titi:ro ubuntu:22.04 mkdir /titi/plip
 
       - name: print image
         run: |
