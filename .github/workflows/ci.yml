@@ -22,7 +22,7 @@ jobs:
     # Launch a matrix of jobs
     strategy:
         matrix:
-          os: [self-hosted]
+          os: [self-hosted,ubuntu-20.04]
           #pattern: [on,off]
 
 
@@ -43,15 +43,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+          logout: ${{ matrix.os == 'self-hosted' }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:
           platforms: ppc64le
-
-      - name: run and mount
-        run: |
-          docker run -v /tmp/test-geos:/titi:ro ubuntu:22.04 apt update -y
 
       - name: print image
         run: |
@@ -61,12 +58,6 @@ jobs:
         run: |
           docker container ls
 
-      - name: echo
-        run: |
-          ls /tmp
-          ls /tmp/test-geos
-          less /tmp/test-geos/toto
-          ls /titi
 
       #
       #- name: pull and push with run on arch
