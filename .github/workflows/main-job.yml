@@ -24,7 +24,7 @@ on:
         default: 'ubuntu-22.04'
 
 jobs:
-  ubuntu:
+  test-os:
     runs-on: ${{ inputs.OS }}
     steps:
       - name: test_if

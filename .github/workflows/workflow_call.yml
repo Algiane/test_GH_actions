@@ -22,6 +22,7 @@ jobs:
     with:
       branch_name:  ${{github.event.inputs.branch}}
       OS: ${{ matrix.os }}
+      BUILD_GENERATOR: ${{ matrix.BUILD_GENERATOR }}
 
     name: ${{matrix.os}}
     strategy:
