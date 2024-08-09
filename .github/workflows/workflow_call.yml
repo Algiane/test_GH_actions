@@ -12,7 +12,7 @@ on:
         # branch to test
         description: 'branch to test'
         # Default value if no value is explicitly provided
-        default: 'master'
+        default: 'master toto'
         required: false
       code_coverage:
         type: boolean
@@ -27,4 +27,4 @@ jobs:
     uses: ./.github/workflows/main-job.yml
     with:
       branch_name:  ${{github.event.inputs.branch}}
-      code_coverage:  ${{github.event.inputs.code_coverage || true}}
+      code_coverage:  ${{github.event.inputs.code_coverage}}
