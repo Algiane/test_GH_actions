@@ -17,14 +17,14 @@ on:
 
 # job
 jobs:
-  mmg-debug:
+  build_gen:
     uses: ./.github/workflows/main-job.yml
     with:
       branch_name:  ${{github.event.inputs.branch}}
       OS: ${{ matrix.os }}
       BUILD_GENERATOR: ${{ matrix.BUILD_GENERATOR }}
 
-    name: ${{matrix.os}}
+    name: BUILD-gen-arg-${{matrix.os}}
     strategy:
       fail-fast: false
       matrix:
@@ -34,3 +34,18 @@ jobs:
             BUILD_GENERATOR: "Unix\ Makefiles"
 
           - os: ubuntu-24.04
+
+
+  no_build_gen:
+    uses: ./.github/workflows/main-job.yml
+    with:
+      branch_name:  ${{github.event.inputs.branch}}
+      OS: ${{ matrix.os }}
+
+    name: no-BUILD-gen-arg-${{matrix.os}}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-20.04,macos-12]
+        include:
+          - os: ubuntu-22.04

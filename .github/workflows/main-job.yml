@@ -39,8 +39,9 @@ jobs:
       - name: Test optionnal var filling
         run: |
           script_args=()
-          if [[ -n "${{ inputs.BUILD_GENERATOR }}" ]]; then
-            BUILD_GENERATOR=${{ inputs.BUILD_GENERATOR }}
+          if [[ -n ${{ inputs.BUILD_GENERATOR }} ]]; then
+            echo "ok here"
+            BUILD_GENERATOR="${{ inputs.BUILD_GENERATOR }}"
             script_args+=(--build-generator ${BUILD_GENERATOR})
             echo "Script   ${script_args[@]}"
           else
