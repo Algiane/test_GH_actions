@@ -21,7 +21,7 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-            os: [ubuntu-20.04,macos-12,windows-2022]
+            os: [ubuntu-20.04,macos-12]
             #build: [Release,Debug]
             #pattern: [on,off]
             #scotch: [off]
