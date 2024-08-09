@@ -14,12 +14,6 @@ on:
         # Default value if no value is explicitly provided
         default: 'master toto'
         required: false
-      code_coverage:
-        type: boolean
-        # Default value if no value is explicitly provided
-        default: true
-        required: false
-
 
 # job
 jobs:
@@ -27,4 +21,3 @@ jobs:
     uses: ./.github/workflows/main-job.yml
     with:
       branch_name:  ${{github.event.inputs.branch}}
-      code_coverage:  ${{github.event.inputs.code_coverage}}
