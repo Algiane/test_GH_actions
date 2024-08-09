@@ -40,9 +40,10 @@ jobs:
         run: |
           script_args=()
           if [[ -n "${{ inputs.BUILD_GENERATOR }}" ]]; then
-            echo "ok here"
             BUILD_GENERATOR="${{ inputs.BUILD_GENERATOR }}"
-            script_args+=(--build-generator ${BUILD_GENERATOR})
+            echo "build gen $BUILD_GENERATOR"
+            script_args+=(--build-generator "${BUILD_GENERATOR}")
+            script_args+=(--build-generator2 \"${BUILD_GENERATOR}\")
             echo "Script   ${script_args[@]}"
           else
             echo "Empty var ${{ inputs.BUILD_GENERATOR }}"
