@@ -56,7 +56,10 @@ jobs:
           if [[ -n "${{ inputs.branch_name }}" ]]; then
             BRANCH=${{ inputs.branch_name }}
             script_args+=(--branch ${BRANCH})
-            echo "   ${script_args[@]}"
+            echo "Script   ${script_args[@]}"
+          else
+            echo "Empty var"
+            echo "Script   ${script_args[@]}"
           fi
 
 
