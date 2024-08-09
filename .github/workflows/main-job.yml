@@ -36,6 +36,9 @@ jobs:
           fi
         shell: bash
 
+      - uses: actions/checkout@v2
+
+
       - name: Test optionnal var filling
         run: |
           script_args=()
@@ -49,7 +52,7 @@ jobs:
             echo "Empty var ${{ inputs.BUILD_GENERATOR }}"
             echo "Script   ${script_args[@]}"
           fi
-
+          ./src/script.sh ${script_args[@]}
 
       - name: test flag accu - step 1
         if: (matrix.os == 'ubuntu-20.04')
