@@ -8,6 +8,7 @@ on:
         # branch to test
         description: 'branch to test'
         # Default value if no value is explicitly provided
+        type: string
         default: 'main'
         required: false
 

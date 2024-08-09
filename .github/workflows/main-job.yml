@@ -6,6 +6,7 @@ on:
         description: 'Branch to checkout when tests are manually triggered'
         required: false
         type: string
+        default: 'toto'
 
       code_coverage:
         description: 'Code coverage'
@@ -48,6 +49,16 @@ jobs:
             echo " if is false "
           fi
         shell: bash
+
+      - name: Test optionnal var filling
+        run: |
+          script_args=()
+          if [[ -n "${{ inputs.branch_name }}" ]]; then
+            BRANCH=${{ inputs.branch_name }}
+            script_args+=(--branch ${BRANCH})
+            echo "   ${script_args[@]}"
+          fi
+
 
       - name: test flag accu - step 1
         if: (matrix.os == 'ubuntu-20.04')
