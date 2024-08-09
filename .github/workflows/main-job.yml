@@ -19,32 +19,12 @@ on:
         type: string
         default: 'Ninja'
 
+      OS:
+        default: 'ubuntu-22.04'
 
 jobs:
   ubuntu:
-    runs-on: ${{ matrix.os }}
-    strategy:
-        fail-fast: false
-        matrix:
-            os: [ubuntu-20.04,macos-12]
-            #build: [Release,Debug]
-            #pattern: [on,off]
-            #scotch: [off]
-            #vtk: [off]
-            #include:
-              # run vtk only without scotch and with delaunay insertion
-              #- build: Release
-                #pattern: off
-                #scotch: off
-                #vtk: on
-                #os: ubuntu-20.04
-                
-              #- build: Debug
-                #pattern: off
-                #scotch: off
-                #vtk: on
-                #os: ubuntu-20.04
-
+    runs-on: ${{ inputs.OS }}
     steps:
       - name: test_if
         run: |

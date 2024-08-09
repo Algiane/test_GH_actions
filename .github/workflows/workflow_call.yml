@@ -21,8 +21,9 @@ jobs:
     uses: ./.github/workflows/main-job.yml
     with:
       branch_name:  ${{github.event.inputs.branch}}
+      OS: ${{ matrix.os }}
 
-    runs-on: ${{ matrix.os }}
+    name: ${{matrix.os}}
     strategy:
       fail-fast: false
       matrix:
