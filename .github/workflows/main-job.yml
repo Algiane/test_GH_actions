@@ -20,6 +20,7 @@ on:
         default: 'Ninja'
 
       OS:
+        type: string
         default: 'ubuntu-22.04'
 
 jobs:
