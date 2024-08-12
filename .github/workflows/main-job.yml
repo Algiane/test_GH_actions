@@ -53,6 +53,7 @@ jobs:
             echo "Script   ${script_args[@]}"
           fi
           ./src/script.sh ${script_args[@]}
+        shell: bash
 
       - name: test flag accu - step 1
         if: (matrix.os == 'ubuntu-20.04')
