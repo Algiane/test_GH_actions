@@ -49,8 +49,8 @@ jobs:
           else
             echo "Empty var ${{ inputs.BUILD_GENERATOR }}"
           fi
-          echo str="${script_args[*]}"
-          echo str2="${script_args[@]}"
+          str="${script_args[*]}"
+          str2="${script_args[@]}"
           echo $str $str2
           ./src/script.sh $str $str2
         shell: bash
