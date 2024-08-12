@@ -31,7 +31,7 @@ jobs:
         os: [ubuntu-20.04,macos-12]
         include:
           - os: ubuntu-22.04
-            BUILD_GENERATOR: 'Unix\ Makefiles'
+            BUILD_GENERATOR: "Unix Makefiles"
 
           - os: ubuntu-24.04
 
