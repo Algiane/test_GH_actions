@@ -43,7 +43,9 @@ jobs:
         run: |
           script_args=()
           if [[ -n "${{ inputs.BUILD_GENERATOR }}" ]]; then
+            BUILD_GENERATOR=${{ inputs.BUILD_GENERATOR }}
             script_args+=(${{ inputs.BUILD_GENERATOR }})
+            script_args+=(${BUILD_GENERATOR})
             echo "Script   ${script_args[@]}"
           else
             echo "Empty var ${{ inputs.BUILD_GENERATOR }}"
