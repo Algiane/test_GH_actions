@@ -4,6 +4,7 @@ printenv
 
 SCRIPT_NAME=$0
 echo "Running CLI ${SCRIPT_NAME} $@"
+echo "Hand splitting ${SCRIPT_NAME}; $1; $2; $3; $4; $5; $6"
 
 
 
@@ -78,7 +79,7 @@ TEST_DOCUMENTATION=false
 CODE_COVERAGE=false
 NPROC="$(nproc)"
 
-eval set -- "${args}"
+eval set -- ${args}
 err=0
 while :
 do
@@ -89,6 +90,8 @@ do
       shift;;
     --cmake-build-type)      CMAKE_BUILD_TYPE=$2;        shift 2;;
     --build-generator)
+        echo "Arg passed: $2"
+        echo "Next: $3"
         if [[ -z "$2" || "Unix Makefiles" == "$2" ]] ; then
             BUILD_GENERATOR=""
         elif [[ "Eclipse CDT4 - Unix Makefiles" == "$2" ]] ; then
