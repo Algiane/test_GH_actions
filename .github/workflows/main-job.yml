@@ -44,10 +44,8 @@ jobs:
           script_args=()
           if [[ -n "${{ inputs.BUILD_GENERATOR }}" ]]; then
             BUILD_GENERATOR="${{ inputs.BUILD_GENERATOR }}"
-            echo "build gen $BUILD_GENERATOR"
-            script_args+=(--build-generator "${BUILD_GENERATOR}")
-            script_args+=(--nproc 2 --build-generator \"${BUILD_GENERATOR}\")
-            echo "Script   ${script_args[0]};  ${script_args[1]};  ${script_args[2]};  ${script_args[3]};  ${script_args[4]};  ${script_args[5]}"
+            script_args+=(--build-generator ""${BUILD_GENERATOR}"")
+            echo "Script   ${script_args[@]}"
           else
             echo "Empty var ${{ inputs.BUILD_GENERATOR }}"
             echo "Script   ${script_args[@]}"
