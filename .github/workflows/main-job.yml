@@ -48,9 +48,9 @@ jobs:
             echo "Script   ${script_args[@]}"
           else
             echo "Empty var ${{ inputs.BUILD_GENERATOR }}"
-            echo "Script   ${script_args[@]}"
+            echo "Script   ${script_args[*]}"
           fi
-          ./src/script.sh \"${script_args[@]}\"
+          ./src/script.sh ${script_args[*]}
         shell: bash
 
       - name: test flag accu - step 1
