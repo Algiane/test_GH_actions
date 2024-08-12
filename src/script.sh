@@ -62,9 +62,8 @@ exit 1
 # Then we'll move to the build dir.
 or_die cd $(dirname $0)/..
 
-
 # Parsing using getopt
-args=$(or_die getopt -a -o h --long build-exe-only,cmake-build-type:,build-generator:,code-coverage,data-basename:,exchange-dir:,host-config:,install-dir-basename:,no-install-schema,no-run-unit-tests,nproc:,repository:,run-integrated-tests,sccache-credentials:,test-code-style,test-documentation,help -- "$@")
+args=$(or_die getopt -a -o h --long build-exe-only,cmake-build-type:,code-coverage,data-basename:,eclipse,exchange-dir:,host-config:,install-dir-basename:,makefile,ninja,no-install-schema,no-run-unit-tests,nproc:,repository:,run-integrated-tests,sccache-credentials:,test-code-style,test-documentation,xcode,help -- "$@")
 
 # Variables with default values
 BUILD_EXE_ONLY=false
@@ -80,7 +79,6 @@ CODE_COVERAGE=false
 NPROC="$(nproc)"
 
 eval set -- ${args}
-err=0
 while :
 do
   case $1 in
@@ -89,23 +87,9 @@ do
       RUN_UNIT_TESTS=false
       shift;;
     --cmake-build-type)      CMAKE_BUILD_TYPE=$2;        shift 2;;
-    --build-generator)
-        echo "Arg passed: $2"
-        echo "Next: $3"
-        if [[ -z "$2" || "Unix Makefiles" == "$2" ]] ; then
-            BUILD_GENERATOR=""
-        elif [[ "Eclipse CDT4 - Unix Makefiles" == "$2" ]] ; then
-            BUILD_GENERATOR="--eclipse"
-        elif [[ "Ninja" == "$2" ]] ; then
-            BUILD_GENERATOR="--ninja"
-        elif [[ "Xcode" == "$2" ]] ; then
-            BUILD_GENERATOR="--xcode"
-        else
-            echo "Unexpected generator $2 passed to '--build-generator' option."
-            err=1
-        fi
-        echo "Build generator is $BUILD_GENERATOR"
-        shift 2;;
+    --eclipse|--ninja|--xcode)
+        BUILD_GENERATOR=$1;
+        shift;;
     --data-basename)
       DATA_BASENAME=$2
       DATA_BASENAME_WE=${DATA_BASENAME%%.*}
@@ -119,6 +103,7 @@ do
     --exchange-dir)          DATA_EXCHANGE_DIR=$2;       shift 2;;
     --host-config)           HOST_CONFIG=$2;             shift 2;;
     --install-dir-basename)  GEOS_DIR=${GEOSX_TPL_DIR}/../$2; shift 2;;
+    --makefile)              BUILD_GENERATOR="";         shift;;
     --no-install-schema)     GEOS_INSTALL_SCHEMA=false; shift;;
     --no-run-unit-tests)     RUN_UNIT_TESTS=false;       shift;;
     --nproc)                 NPROC=$2;                   shift 2;;
@@ -137,5 +122,5 @@ do
   esac
 done
 
+echo " build option $BUILD_GENERATOR"
 
-exit $err

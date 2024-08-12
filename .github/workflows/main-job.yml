@@ -17,7 +17,7 @@ on:
       BUILD_GENERATOR:
         required: false
         type: string
-        default: 'Ninja'
+        default: '--ninja'
 
       OS:
         type: string
@@ -43,16 +43,12 @@ jobs:
         run: |
           script_args=()
           if [[ -n "${{ inputs.BUILD_GENERATOR }}" ]]; then
-            BUILD_GENERATOR="${{ inputs.BUILD_GENERATOR }}"
-            script_args+=(--build-generator ""${BUILD_GENERATOR}"")
+            script_args+=(${{ inputs.BUILD_GENERATOR }})
             echo "Script   ${script_args[@]}"
           else
             echo "Empty var ${{ inputs.BUILD_GENERATOR }}"
           fi
-          str="${script_args[*]}"
-          str2="${script_args[@]}"
-          echo $str $str2
-          ./src/script.sh $str $str2
+          ./src/script.sh $script_args[@]
         shell: bash
 
       - name: test flag accu - step 1
