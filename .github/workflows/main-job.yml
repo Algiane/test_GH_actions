@@ -44,7 +44,7 @@ jobs:
           script_args=()
           if [[ -n "${{ inputs.BUILD_GENERATOR }}" ]]; then
             BUILD_GENERATOR="${{ inputs.BUILD_GENERATOR }}"
-            script_args+=(--build-generator ""${BUILD_GENERATOR}"")
+            script_args+=(--build-generator "'${BUILD_GENERATOR}'")
             echo "Script   ${script_args[@]}"
             echo "Script3   '${script_args[*]}'"
             echo "Script2   '${script_args[@]}'"
