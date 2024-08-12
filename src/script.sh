@@ -135,4 +135,4 @@ do
 done
 
 
-exit err
+exit $err
