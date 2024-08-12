@@ -79,6 +79,7 @@ CODE_COVERAGE=false
 NPROC="$(nproc)"
 
 eval set -- ${args}
+err = 0
 while :
 do
   case $1 in
@@ -97,8 +98,8 @@ do
         elif [[ "Xcode" == "$2" ]] ; then
             BUILD_GENERATOR="--xcode"
         else
-            echo "Unexpected generator passed to '--build-generator' option."
-            exit 1
+            echo "Unexpected generator $2 passed to '--build-generator' option."
+            err = 1
         fi
         echo "Build generator is $BUILD_GENERATOR"
         shift 2;;
@@ -133,5 +134,5 @@ do
   esac
 done
 
-echo "SUCCEED --- "
-exit 0
+
+exit err
